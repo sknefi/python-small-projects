@@ -14,10 +14,29 @@ class LinkedList:
             yield current.value
             current = current.next
 
+    def create_new(self, *args):
+        # creates new linked list, with new head
+        # so linked list will contain only values in *args
+        if not args:
+            print('create_new: Any args set, doing nothing')
+            return None
+
+        head = Node(args[0])
+        current = head
+        self.head = head
+
+        for value in args[1:]:
+            current.next = Node(value)
+            current = current.next
+
+        print('create_new: Created whole new linked list')
+        return head
+
     def append(self, value):
         new_node = Node(value)
         if self.head is None:
             self.head = new_node
+            print(f'append: Append value {value} as head of LinkedList')
             return
 
         curr_node = self.head
@@ -25,6 +44,34 @@ class LinkedList:
             curr_node = curr_node.next
 
         curr_node.next = new_node
+        print(f'append: Append value {value} on the end of LinkedList')
+
+    def remove_value(self, value):
+        if self.head is None:
+            print('remove_value: LinkedList is empty')
+
+            return False
+
+        prev_node = None
+        curr_node = self.head
+
+        while curr_node:
+            if curr_node.value == value:
+                if prev_node:
+                    print(f'remove_value: Removed node with value {value} from LinkedList')
+                    prev_node.next = curr_node.next
+                else:
+                    print(f'remove_value: Removed head node with value {value} from LinkedList')
+                    self.head = curr_node.next
+
+                return True
+
+            prev_node = curr_node
+            curr_node = curr_node.next
+
+        print(f"remove_value: Value '{value}' not found in LinkedList")
+        return False
+
 
 class Tests:
     def __init__(self):
@@ -35,15 +82,64 @@ class Tests:
             print(x, end=' -> ')
 
         print('NULL')
+        print()
 
     def test_append(self):
-        self.linked_list.append('a')
-        self.linked_list.append('b')
-        self.linked_list.append('c')
-        self.linked_list.append('d')
+        print('===APPEND===')
 
+        print("Adding value 'a' to LinkedList")
+        self.linked_list.append('a')
+        self.printLinkedList()
+
+        print("Adding value 'b' to LinkedList")
+        self.linked_list.append('b')
+        self.printLinkedList()
+
+        print("Adding value 'c' to LinkedList")
+        self.linked_list.append('c')
+        self.printLinkedList()
+
+        print("Adding value 'd' to LinkedList")
+        self.linked_list.append('d')
+        self.printLinkedList()
+
+    def test_remove(self):
+        print('===REMOVE===')
+
+        print("Removing value 'b' from the linked list:")
+        self.linked_list.remove_value('b')
+        self.printLinkedList()
+
+        print("Removing value 'a' from the linked list:")
+        self.linked_list.remove_value('a')
+        self.printLinkedList()
+
+        print("Removing value 'd' from the linked list:")
+        self.linked_list.remove_value('d')
+        self.printLinkedList()
+
+        print("Removing value 'x' (not in the list) from the linked list:")
+        self.linked_list.remove_value('x')
+        self.printLinkedList()
+
+    def test_create_linked_list(self):
+        print('===CREATE NEW LINKED LIST===')
+        print("Creating linked list from parameters 1, 2, 3, 4, 5:")
+        self.linked_list.create_new(1, 2, 3, 4, 5)
+        self.printLinkedList()
+
+        print("Creating linked list from parameters 'a', 'b', 'c':")
+        self.linked_list.create_new('a', 'b', 'c')
+        self.printLinkedList()
+
+        print("Creating linked list from empty parameters:")
+        self.linked_list.create_new()
         self.printLinkedList()
 
 
 test = Tests()
 test.test_append()
+test.test_remove()
+test.test_create_linked_list()
+
+
