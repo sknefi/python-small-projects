@@ -72,13 +72,33 @@ class LinkedList:
         print(f"remove_value: Value '{value}' not found in LinkedList")
         return False
 
+    def prepend(self, value):
+        new_node = Node(value)
+
+        if self.head is None:
+            self.head = new_node
+            print(f'prepend: Prepend value {value} as head of LinkedList')
+            return
+
+        new_node.next = self.head
+        self.head = new_node
+        print(f'prepend: Prepend value {value} at the beginning of LinkedList (new head)')
+
 
 class Tests:
     def __init__(self):
         self.linked_list = LinkedList()
+        self.helper_list = LinkedList()  # this list will be empty all the time
 
     def printLinkedList(self):
         for x in self.linked_list:
+            print(x, end=' -> ')
+
+        print('NULL')
+        print()
+
+    def printHelperList(self):
+        for x in self.helper_list:
             print(x, end=' -> ')
 
         print('NULL')
@@ -136,10 +156,23 @@ class Tests:
         self.linked_list.create_new()
         self.printLinkedList()
 
+    def test_prepend(self):
+        print('===PREPEND===')
+
+        print("Prepending value 'x' to LinkedList")
+        self.linked_list.prepend('x')
+        self.printLinkedList()
+
+        self.helper_list = LinkedList()
+        print("Prepending value 'y' to LinkedList")
+        self.helper_list.prepend('y')
+        self.printHelperList()
+
 
 test = Tests()
 test.test_append()
 test.test_remove()
 test.test_create_linked_list()
+test.test_prepend()
 
 
