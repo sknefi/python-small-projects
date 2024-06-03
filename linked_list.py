@@ -84,6 +84,26 @@ class LinkedList:
         self.head = new_node
         print(f'prepend: Prepend value {value} at the beginning of LinkedList (new head)')
 
+    def remove_last(self):
+        if self.head is None:
+            print('remove_last: LinkedList is empty')
+            return False
+
+        if self.head.next is None:
+            print(f'remove_last: Removed last node with value {self.head.value} from LinkedList')
+            self.head = None
+            return True
+
+        prev_node = None
+        curr_node = self.head
+        while curr_node.next:
+            prev_node = curr_node
+            curr_node = curr_node.next
+
+        prev_node.next = None
+        print(f'remove_last: Removed last node with value {curr_node.value} from LinkedList')
+        return True
+
 
 class Tests:
     def __init__(self):
@@ -168,11 +188,41 @@ class Tests:
         self.helper_list.prepend('y')
         self.printHelperList()
 
+    def test_remove_last(self):
+        print('===REMOVE LAST===')
+
+        print("Creating linked list from parameters 1, 2, 3, 4, 5:")
+        self.linked_list.create_new(1, 2, 3, 4, 5)
+        self.printLinkedList()
+
+        print("Removing last element from the linked list:")
+        self.linked_list.remove_last()
+        self.printLinkedList()
+
+        print("Removing last element from the linked list again:")
+        self.linked_list.remove_last()
+        self.printLinkedList()
+
+        print("Removing last element from the linked list again:")
+        self.linked_list.remove_last()
+        self.printLinkedList()
+
+        print("Removing last element from the linked list again:")
+        self.linked_list.remove_last()
+        self.printLinkedList()
+
+        print("Removing last element from the linked list again:")
+        self.linked_list.remove_last()
+        self.printLinkedList()
+
+        print("Trying to remove last element from an empty linked list:")
+        self.linked_list.remove_last()
 
 test = Tests()
 test.test_append()
 test.test_remove()
 test.test_create_linked_list()
 test.test_prepend()
+test.test_remove_last()
 
 

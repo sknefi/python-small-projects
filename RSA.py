@@ -60,16 +60,15 @@ def decrypt(private_key, ciphertext):
 def brute_force_attack(public_key, encrypted_message):
     e, n = public_key
     for possible_key in range(2, n):
+        print(possible_key)
         if n % possible_key == 0:
             p = possible_key
             q = n // possible_key
             phi = (p - 1) * (q - 1)
             d = pow(e, -1, phi)
-            try:
-                decrypted_message = decrypt((d, n), encrypted_message)
-                return decrypted_message
-            except:
-                pass
+            decrypted_message = decrypt((d, n), encrypted_message)
+            return decrypted_message
+
 
 
 # Testovanie
@@ -85,5 +84,3 @@ print("Dekodovana správa:", decrypted_msg)
 
 # Testovanie prelomenia
 print("Prelomená správa:", brute_force_attack(public_key, encrypted_msg))
-
-print(ord('4'))
